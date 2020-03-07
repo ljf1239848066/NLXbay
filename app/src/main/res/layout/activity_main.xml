@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.lxzh123.nlxbay.view.RCRelativeLayout
+        android:id="@+id/layout_nlx"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/tips_normal_bg">
+
+        <com.lxzh123.nlxbay.view.NLXView
+            android:id="@+id/nlx_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.lxzh123.nlxbay.view.RCRelativeLayout>
+
+    <SeekBar
+        android:id="@+id/seek_speed"
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/layout_nlx"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:max="200"
+        android:min="5"
+        android:progress="236" />
+
+    <TextView
+        android:id="@+id/tv_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/seek_speed"
+        android:layout_alignBottom="@id/seek_speed"
+        android:layout_toRightOf="@id/seek_speed"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="1dp"
+        android:textSize="10sp"/>
+
+    <SeekBar
+        android:id="@+id/seek_count"
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/seek_speed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:max="1000"
+        android:min="10"
+        android:progress="40" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/seek_count"
+        android:layout_alignBottom="@id/seek_count"
+        android:layout_toRightOf="@id/seek_count"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="1dp"
+        android:textSize="10sp"/>
+
+    <SeekBar
+        android:id="@+id/seek_radius"
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/seek_count"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:max="300"
+        android:min="0"
+        android:progress="18" />
+
+    <TextView
+        android:id="@+id/tv_radius"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/seek_radius"
+        android:layout_alignBottom="@id/seek_radius"
+        android:layout_toRightOf="@id/seek_radius"
+        android:gravity="center_vertical|left"
+        android:layout_marginLeft="1dp"
+        android:textSize="10sp"/>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seek_radius"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="start" />
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="stop" />
+
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_stop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="refresh" />
+
+</RelativeLayout>
