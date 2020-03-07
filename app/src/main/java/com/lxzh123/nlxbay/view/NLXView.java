@@ -30,6 +30,7 @@ public class NLXView extends View implements Runnable {
     private final static float DP_LINE_WIDTH = 1;
     private final static int PARTICLE_COUNT = 40;
     private final static int DP_MAX_LINE_DIST = 90;
+    private final static int PARTICLE_SPEED = 10;
 
     private final static int INTERVAL = 10;
 
@@ -58,7 +59,7 @@ public class NLXView extends View implements Runnable {
     /**
      * 最大速度
      */
-    private int mMaxSpeed;
+    private float mMaxSpeed;
     /**
      * 粒子数
      */
@@ -123,7 +124,7 @@ public class NLXView extends View implements Runnable {
         mRadius = DensityUtils.dip2px(scale, DP_RADIUS);
         mLineWidth = DensityUtils.dip2px(scale, DP_LINE_WIDTH);
         mDist = DensityUtils.dip2px(scale, DP_MAX_LINE_DIST);
-        mMaxSpeed = 20;
+        mMaxSpeed = DensityUtils.dip2px(scale, PARTICLE_SPEED);
         mCnt = PARTICLE_COUNT;
         mBackColor = 0xFF202632;
         mPointColor = 0xFFFFFFFF;
@@ -135,14 +136,16 @@ public class NLXView extends View implements Runnable {
         mUpdating = true;
         Random random = new Random();
         particles = new ArrayList<>();
-        int upThreshold = mMaxSpeed * 2 + 1;
-        Particle.init(mX, mY, mW, mH);
+        int upThreshold = (int) (mMaxSpeed * 2 + 1);
+        int margin = (int)(mRadius * 2);
+        Particle.init(mX, mY, mW, mH, margin);
         for (int i = 0; i < mCnt; i++) {
             float x = random.nextInt(mW) + mX;
             float y = random.nextInt(mH) + mY;
-            float vx = (float) (Math.floor(random.nextInt(upThreshold)) - mMaxSpeed);
-            float vy = (float) (Math.floor(random.nextInt(upThreshold)) - mMaxSpeed);
-            particles.add(new Particle(x, y, mRadius, mPointColor, vx, vy));
+            float vx = random.nextInt(upThreshold)*1f / mMaxSpeed - 1;
+            float vy = random.nextInt(upThreshold)*1f / mMaxSpeed - 1;
+            Particle p = new Particle(x, y, mRadius, mPointColor, vx, vy);
+            particles.add(p);
         }
         mPaint = new Paint();
         mPaint.setColor(mBackColor);
@@ -161,7 +164,7 @@ public class NLXView extends View implements Runnable {
     }
 
     public void setMaxSpeed(int maxSpeed) {
-        int preSpeed = this.mMaxSpeed;
+        float preSpeed = this.mMaxSpeed;
         float scale = maxSpeed * 1f / preSpeed;
         for (int i = 0; i < particles.size(); i++) {
             Particle p = particles.get(i);
@@ -175,7 +178,7 @@ public class NLXView extends View implements Runnable {
         if (count <= 0) {
             count = PARTICLE_COUNT;
         }
-        if(this.mCnt != count) {
+        if (this.mCnt != count) {
             this.mCnt = count;
             initView();
         }
@@ -242,9 +245,7 @@ public class NLXView extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawRect(new Rect(0, 0, mW, mH), mPaint);
         int cnt = particles.size();
-//        Log.d(TAG, "onDraw");
         for (int i = 0; i < cnt; i++) {
             Particle p1 = particles.get(i);
             for (int j = i + 1; j < cnt; j++) {
@@ -253,7 +254,6 @@ public class NLXView extends View implements Runnable {
                 if (lineAlpha > 1) {
                     continue;
                 }
-//                Log.d(TAG, "onDraw i=" + i + ",j=" + j + ", lineAlpha=" + lineAlpha);
                 mLinePaint.setColor(Color.argb((int) (255 * (1 - lineAlpha)), mLineColor.r, mLineColor.g, mLineColor.b));
                 canvas.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY(), mLinePaint);
             }
